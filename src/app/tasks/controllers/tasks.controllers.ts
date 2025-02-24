@@ -14,29 +14,29 @@ export class TasksController {
 ) {}
 
   @Get()
-  getTasks(): Task[] {
+  getTasks(): Promise<Task[]> {
     return this.tasksDomain.getTasks();
   }
 
   
   @Post()
   @HttpCode(201)
-  createTask(@Body() createTaskInput: CreateTaskInput):CreateTaskOutput {
+  createTask(@Body() createTaskInput: CreateTaskInput): Promise<CreateTaskOutput> {
     return this.tasksDomain.createTask(createTaskInput);
   }
     
-    @Get(':id')
-    getTask(@Param('id') id: TaskId): Task {
-        return this.tasksDomain.getTask(id);
-    }
+  @Get(':id')
+  getTask(@Param('id') id: TaskId): Promise<Task | null> {
+    return this.tasksDomain.getTask(id);
+  }
 
   @Put(':id')
-  updateTask(@Param('id') id: TaskId, @Body() updateTaskInput: UpdateTaskInput): string {
+  updateTask(@Param('id') id: TaskId, @Body() updateTaskInput: UpdateTaskInput): Promise<string> {
     return this.tasksDomain.updateTask(id, updateTaskInput);
   }
 
   @Delete(':id')
-    deleteTask(@Param('id') id: TaskId): string {
+    deleteTask(@Param('id') id: TaskId): Promise<string> {
     return this.tasksDomain.deleteTask(id);
   }
 }

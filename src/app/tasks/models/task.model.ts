@@ -7,10 +7,17 @@ export enum TaskStatus {
 
 export type TaskId = string
 
-export type Task = {
-    id?: TaskId;
-    title: string
-        description: string;
-    status: TaskStatus;
-};
 
+
+export class Task {
+    constructor(
+        public title: string,
+        public description: string,
+        public status: TaskStatus,
+        public readonly id?: TaskId,
+    ) {}
+
+    setStatus(status: TaskStatus) {
+        this.status = status;
+    }
+}
