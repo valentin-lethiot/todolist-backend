@@ -12,13 +12,12 @@ export class MongoDBTasksRepository implements ITasksRepository {
 constructor(@InjectModel(TaskModel.name) private taskModel: Model<TaskModel>) {}
 
   async getTasks(): Promise<Task[]> {
-    const storedTasks = await this.taskModel.find().exec();
+    const storedTasks = await this.taskModel.find({ status: { $ne: 'DELETED' } }).exec();
     return storedTasks.map(storedTask => new Task(storedTask.title, storedTask.description, storedTask.status, storedTask._id.toString()));
   }
 
   async getTask(id: TaskId): Promise<Task | null> {
     const storedTask = await this.taskModel.findById(id).exec();
-    console.log(storedTask);
 
     return storedTask ? new Task(storedTask.title, storedTask.description, storedTask.status, storedTask._id.toString()) : null;
   }
@@ -29,8 +28,8 @@ constructor(@InjectModel(TaskModel.name) private taskModel: Model<TaskModel>) {}
     return savedTask._id.toString();
   }
 
-  async updateTask(id: string, updateTaskInput: UpdateTaskInput): Promise<string> {
+  async updateTask(id: string, updateTaskInput: UpdateTaskInput): Promise<string | null> {
     const updatedTask = await this.taskModel.findByIdAndUpdate(id, updateTaskInput, { new: true }).exec();
-    return updatedTask ? updatedTask._id.toString() : 'Task not found';
+    return updatedTask ? updatedTask._id.toString() : null;
   }
 }

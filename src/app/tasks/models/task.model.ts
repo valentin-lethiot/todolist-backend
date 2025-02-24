@@ -7,8 +7,6 @@ export enum TaskStatus {
 
 export type TaskId = string
 
-
-
 export class Task {
     constructor(
         public title: string,

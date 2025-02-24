@@ -6,7 +6,7 @@ export interface ITasksRepository {
     getTasks(): Promise<Task[]>;
     getTask(id: TaskId): Promise<Task | null>;
     createTask(createTaskInput: CreateTaskInput): Promise<string>;
-    updateTask(id: string, taskToUpdate: Task): Promise<string>;
+    updateTask(id: string, taskToUpdate: Task): Promise<string | null>;
 }
 
 export const ITasksRepository = Symbol("ITasksRepository");
