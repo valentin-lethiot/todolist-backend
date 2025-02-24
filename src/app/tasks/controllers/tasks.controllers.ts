@@ -4,6 +4,7 @@ import { Task, TaskId } from '../models/task.model';
 import { ITasksDomain } from '../domain/ports/tasks-domain.interface';
 import { CreateTaskOutput } from '../models/outputs/create-task.output';
 import { CreateTaskInput } from '../models/inputs/create-task.input';
+import { UpdateTaskInput } from '../models/inputs/update-task.input';
 
 @Controller("tasks")
 export class TasksController {
@@ -26,13 +27,13 @@ export class TasksController {
     
     @Get(':id')
     getTask(@Param('id') id: TaskId): Task {
-      return this.tasksDomain.getTask(id);
+        return this.tasksDomain.getTask(id);
     }
 
- // @Put()
-  //updateTask(id: TaskId): string {
- //   return this.tasksDomain.updateTask(id);
-  //}
+  @Put(':id')
+  updateTask(@Param('id') id: TaskId, @Body() updateTaskInput: UpdateTaskInput): string {
+    return this.tasksDomain.updateTask(id, updateTaskInput);
+  }
 
   @Delete(':id')
     deleteTask(@Param('id') id: TaskId): string {

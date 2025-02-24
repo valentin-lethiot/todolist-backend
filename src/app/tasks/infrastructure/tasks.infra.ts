@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Task, TaskId } from '../models/task.model';
 import { TaskStatus } from '../models/task.model';
 import { ITasksInfra } from './ports/tasks-infra.interface';
+import { UpdateTaskInput } from '../models/inputs/update-task.input';
 
 @Injectable()
 export class TasksInfra implements ITasksInfra {
@@ -46,9 +47,16 @@ tasks : Task[] = [
     return id;
   }
 
-//  updateTask(id: TaskId) {
- //   return 'Hello World!';
- // }
+  updateTask(id: TaskId, updateTaskInput: UpdateTaskInput): string {
+    const taskIndex = this.tasks.findIndex(task => task.id === id);
+    if (taskIndex === -1) return 'Task not found';
+
+    this.tasks[taskIndex] = {
+        id,
+            ...updateTaskInput,
+        }
+                            return 'Task updated';
+  }
 
   deleteTask(id: TaskId): string {
     const task = this.tasks.find(task => task.id === id);
