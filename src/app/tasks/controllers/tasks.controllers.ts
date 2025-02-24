@@ -1,33 +1,39 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Inject, Param } from '@nestjs/common';
 import { TasksDomain } from '../domain/tasks.domain';
-import { TaskId } from '../models/task.model';
+import { Task, TaskId } from '../models/task.model';
+import { ITasksDomain } from '../domain/ports/tasks-domain.interface';
 
-@Controller()
+@Controller("tasks")
 export class TasksController {
-  constructor(private readonly tasksDomain: TasksDomain) {}
+  constructor(
+    @Inject(ITasksDomain)
+    private readonly tasksDomain: ITasksDomain
+) {}
 
   @Get()
-  getTasks(): string {
+  getTasks(): Task[] {
     return this.tasksDomain.getTasks();
   }
 
-  @Get()
-  getTask(id: TaskId): string {
-    return this.tasksDomain.getTasks();
-  }
+  
+  //@Post()
+  //@HttpCode(204)
+  //createTask(id: TaskId): string {
+    //  return this.tasksDomain.createTask(id);
+    //}
+    
+    @Get(':id')
+    getTask(@Param('id') id: TaskId): Task {
+      return this.tasksDomain.getTask(id);
+    }
 
-  @Post()
-  createTask(id: TaskId): string {
-    return this.tasksDomain.getTasks();
-  }
+ // @Put()
+  //updateTask(id: TaskId): string {
+ //   return this.tasksDomain.updateTask(id);
+  //}
 
-  @Put()
-  updateTask(id: TaskId): string {
-    return this.tasksDomain.getTasks();
-  }
-
-  @Delete()
-  deleteTask(id: TaskId): string {
-    return this.tasksDomain.getTasks();
-  }
+//  @Delete()
+ // deleteTask(id: TaskId): string {
+//    return this.tasksDomain.deleteTask(id);
+ // }
 }
