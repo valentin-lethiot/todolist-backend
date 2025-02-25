@@ -1,4 +1,4 @@
-import { BaseOutput } from "./base-output.type"
+import { BaseOutput } from './base-output.type';
 
 export class UpdateTaskOutput extends BaseOutput {
     data: string | null;

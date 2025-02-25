@@ -1,7 +1,7 @@
-import { TaskStatus } from "../task.model";
+import { TaskStatus } from '../task.model';
 
 export type UpdateTaskInput = {
     title: string;
     description: string;
-    status: TaskStatus
-}
+    status: TaskStatus;
+};

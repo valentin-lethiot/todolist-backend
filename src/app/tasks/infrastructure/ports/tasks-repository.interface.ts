@@ -1,6 +1,6 @@
-import { CreateTaskInput } from "../../models/inputs/create-task.input";
-import { UpdateTaskInput } from "../../models/inputs/update-task.input";
-import { Task, TaskId } from "../../models/task.model";
+import { CreateTaskInput } from '../../models/inputs/create-task.input';
+import { UpdateTaskInput } from '../../models/inputs/update-task.input';
+import { Task, TaskId } from '../../models/task.model';
 
 export interface ITasksRepository {
     getTasks(): Promise<Task[]>;
@@ -9,4 +9,4 @@ export interface ITasksRepository {
     updateTask(id: string, taskToUpdate: Task): Promise<string | null>;
 }
 
-export const ITasksRepository = Symbol("ITasksRepository");
+export const ITasksRepository = Symbol('ITasksRepository');

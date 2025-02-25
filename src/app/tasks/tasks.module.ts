@@ -8,18 +8,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Task, TaskSchema } from './infrastructure/task.schema';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }])
-  ],
-  controllers: [TasksController],
-  providers: [{
-    provide: ITasksDomain,
-    useClass: TasksDomain
-  },
-  {
-    provide: ITasksRepository,
-    useClass: MongoDBTasksRepository  
-  }
-],
+    imports: [MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }])],
+    controllers: [TasksController],
+    providers: [
+        {
+            provide: ITasksDomain,
+            useClass: TasksDomain,
+        },
+        {
+            provide: ITasksRepository,
+            useClass: MongoDBTasksRepository,
+        },
+    ],
 })
 export class TasksModule {}

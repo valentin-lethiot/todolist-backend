@@ -1,15 +1,30 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
-    volumes:
-      - mongodb_data:/data/db
+    mongodb:
+        image: mongo:6
+        container_name: mongodb
+        restart: always
+        ports:
+            - '27017:27017'
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: password
+        volumes:
+            - mongodb_data:/data/db
+
+    api:
+        build: .
+        container_name: nest_api
+        restart: always
+        depends_on:
+            - mongodb
+        ports:
+            - '3000:3000'
+        environment:
+            - MONGO_URI=mongodb://admin:password@mongodb:27017
+            - NODE_ENV=production
+        command: ['node', 'dist/main.js']
 
 volumes:
-  mongodb_data:
+    mongodb_data:

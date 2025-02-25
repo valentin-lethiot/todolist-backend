@@ -1,5 +1,5 @@
-import { Task } from "../task.model";
-import { BaseOutput } from "./base-output.type"
+import { Task } from '../task.model';
+import { BaseOutput } from './base-output.type';
 
 export class GetTaskOutput extends BaseOutput {
     data: Task | null;
